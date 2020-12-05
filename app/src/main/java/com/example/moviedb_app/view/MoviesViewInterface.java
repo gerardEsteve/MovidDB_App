@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface MoviesViewInterface {
 
-    public void showMovies(ArrayList<Movie> movies);
+    public void showMovies();
     public void showLoading();
     public void showEmptyScreen();
 

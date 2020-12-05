@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
+import com.example.moviedb_app.presenter.MoviesPresenterImplementation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 
@@ -25,7 +28,9 @@ import butterknife.Unbinder;
 public class MainActivity extends AppCompatActivity implements MoviesViewInterface{
 
 
-    @BindView(R.id.text) EditText editText;
+    @BindView(R.id.recyclerView) RecyclerView moviesRecyclerView;
+    MoviesListAdapter moviesListAdapter;
+    MoviesPresenterImplementation moviesPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,16 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-        editText.setText("Hello from Butterknife");
+
+        moviesPresenter = new MoviesPresenterImplementation(this);
+
+        moviesListAdapter = new MoviesListAdapter(moviesPresenter);
+        moviesRecyclerView.setAdapter(moviesListAdapter);
+        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        moviesPresenter.getMovies();
+
+
     }
 
     @Override
@@ -60,8 +74,9 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
     }
 
     @Override
-    public void showMovies(ArrayList<Movie> movies) {
+    public void showMovies() {
         //TODO load recyclerView
+        moviesListAdapter.notifyDataSetChanged();
     }
 
     @Override

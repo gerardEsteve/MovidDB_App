@@ -20,12 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/text"
-        android:text="hola q ase"
-        ></EditText>
 
     <include layout="@layout/content_main" />
 
