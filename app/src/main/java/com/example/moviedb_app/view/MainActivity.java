@@ -1,7 +1,9 @@
-package com.example.moviedb_app;
+package com.example.moviedb_app.view;
 
 import android.os.Bundle;
 
+import com.example.moviedb_app.R;
+import com.example.moviedb_app.model.Movie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,8 +14,18 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+public class MainActivity extends AppCompatActivity implements MoviesViewInterface{
+
+
+    @BindView(R.id.text) EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ButterKnife.bind(this);
+        editText.setText("Hello from Butterknife");
     }
 
     @Override
@@ -44,5 +57,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showMovies(ArrayList<Movie> movies) {
+        //TODO load recyclerView
+    }
+
+    @Override
+    public void showLoading() {
+        //TODO
+    }
+
+    @Override
+    public void showEmptyScreen() {
+        //TODO
     }
 }
