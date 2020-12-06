@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
 
     @Override
     public void showMovies() {
-        //TODO load recyclerView
         moviesListAdapter.notifyDataSetChanged();
     }
 
