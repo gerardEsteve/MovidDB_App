@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface MoviesPresenterInterface {
 
-    public void getMovies();
+    void getMovies(String query);
 
     void onBindMovieRowViewAtPosition(int position, MovieRowView holder);
 

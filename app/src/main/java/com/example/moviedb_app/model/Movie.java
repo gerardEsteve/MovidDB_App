@@ -1,7 +1,5 @@
 package com.example.moviedb_app.model;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Movie {

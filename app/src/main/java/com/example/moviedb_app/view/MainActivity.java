@@ -1,5 +1,8 @@
 package com.example.moviedb_app.view;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.moviedb_app.R;
@@ -11,8 +14,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import java.util.List;
 
@@ -23,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
 
 
     @BindView(R.id.recyclerView) RecyclerView moviesRecyclerView;
+    @BindView(R.id.progress) ProgressBar progressBar;
+    @BindView(R.id.empty) ImageView empty;
+
     MoviesListAdapter moviesListAdapter;
     MoviesPresenterImplementation moviesPresenter;
 
@@ -36,19 +47,33 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
 
         moviesPresenter = new MoviesPresenterImplementation(this);
 
-        moviesListAdapter = new MoviesListAdapter(moviesPresenter);
+        moviesListAdapter = new MoviesListAdapter(moviesPresenter,this);
         moviesRecyclerView.setAdapter(moviesListAdapter);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        moviesPresenter.getMovies();
-
-
+        showEmptyScreen();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                moviesPresenter.getMovies(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -58,33 +83,38 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void showMovies() {
+        progressBar.setVisibility(View.GONE);
+        empty.setVisibility(View.GONE);
         moviesListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showLoading() {
-        //TODO
+        progressBar.setVisibility(View.VISIBLE);
+        empty.setVisibility(View.GONE);
     }
 
     @Override
     public void showEmptyScreen() {
-        //TODO
+        moviesListAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+        empty.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void showError(String message) {
-        //TODO
-        String s = "";
+        progressBar.setVisibility(View.GONE);
+        empty.setVisibility(View.VISIBLE);
+        Log.i("MainActivity",message);
     }
 }

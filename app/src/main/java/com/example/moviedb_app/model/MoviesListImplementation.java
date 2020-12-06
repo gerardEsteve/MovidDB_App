@@ -1,13 +1,11 @@
 package com.example.moviedb_app.model;
 
-import com.example.moviedb_app.model.MoviesListInterface;
 import com.example.moviedb_app.network.ApiInterface;
 import com.example.moviedb_app.network.ApiRetrofit;
 import com.example.moviedb_app.network.MoviesListedRes;
 import com.example.moviedb_app.presenter.MoviesPresenterImplementation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +37,6 @@ public class MoviesListImplementation implements MoviesListInterface {
             moviesPresenter.onErrorApiCall(t);
             }
         });
-        
+
     }
 }
