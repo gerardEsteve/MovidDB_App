@@ -1,16 +1,36 @@
 package com.example.moviedb_app.model;
 
-import android.graphics.Bitmap;
-import android.media.Image;
+import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
 
 public class Movie {
-    //TODO definir la clase
 
     private String title;
     private Double vote_average;
-    private String release_date; // TODO mirar en la api si es STRING o que es
+    private String release_date;
+
+    @SerializedName("overview")
     private String description;
-    private Bitmap thumbnail; // drawable ? bitmap ? mirar en la api TODO
+
+    @SerializedName("poster_path")
+    private String thumbnailPath;
+
+    public Movie(String title, Double vote_average, String release_date, String description, String thumbnailPath) {
+        this.title = title;
+        this.vote_average = vote_average;
+        this.release_date = release_date;
+        this.description = description;
+        this.thumbnailPath = thumbnailPath;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Double getVote_average() {
         return vote_average;
@@ -36,19 +56,11 @@ public class Movie {
         this.description = description;
     }
 
-    public Bitmap getThumbnail() {
-        return thumbnail;
+    public String getThumbnailPath() {
+        return thumbnailPath;
     }
 
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
     }
 }
