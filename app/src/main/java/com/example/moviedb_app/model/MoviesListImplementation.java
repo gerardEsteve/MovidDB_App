@@ -16,16 +16,18 @@ import static com.example.moviedb_app.network.ApiRetrofit.API_KEY;
 public class MoviesListImplementation implements MoviesListInterface {
 
     @Override
-    public void getMovies(String searchText, MoviesPresenterImplementation moviesPresenter) {
+    public void getMovies(String searchText, MoviesPresenterImplementation moviesPresenter, int page) {
 
         ApiInterface apiService = ApiRetrofit.getRetrofitClient().create(ApiInterface.class);
-        Call<MoviesListedRes> call = apiService.getMoviesByQuery(API_KEY, searchText);
+        Call<MoviesListedRes> call = apiService.getMoviesByQuery(API_KEY, searchText,page);
         call.enqueue(new Callback<MoviesListedRes>() {
             @Override
             public void onResponse(Call<MoviesListedRes> call, Response<MoviesListedRes> response) {
                 if (response.code() == 200){
                     ArrayList<Movie> movies = new ArrayList<>(response.body().getResults());
-                    moviesPresenter.onApiResultsFinished(movies);
+
+
+                    moviesPresenter.onApiResultsFinished(movies,response.body().getTotalPages());
                 }
                 else moviesPresenter.onErrorResponse(response.message());
             }
@@ -37,4 +39,5 @@ public class MoviesListImplementation implements MoviesListInterface {
         });
 
     }
+
 }

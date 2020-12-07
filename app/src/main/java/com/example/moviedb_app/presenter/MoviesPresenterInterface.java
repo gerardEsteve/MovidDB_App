@@ -13,7 +13,7 @@ public interface MoviesPresenterInterface {
 
     int getMoviesCount();
 
-    void onApiResultsFinished(ArrayList<Movie> movies);
+    void onApiResultsFinished(ArrayList<Movie> movies, int totalPages);
 
     void onErrorApiCall(Throwable t);
 
