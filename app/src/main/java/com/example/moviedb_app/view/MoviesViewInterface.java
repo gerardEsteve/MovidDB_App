@@ -6,4 +6,5 @@ public interface MoviesViewInterface {
     void showLoading();
     void showEmptyScreen();
     void showError(String message);
+    void openMovieDetails(String title, String desc, Double rating, String path);
 }

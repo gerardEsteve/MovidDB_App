@@ -17,10 +17,8 @@ public class MoviesListImplementation implements MoviesListInterface {
 
     @Override
     public void getMovies(String searchText, MoviesPresenterImplementation moviesPresenter) {
-        //TODO
 
         ApiInterface apiService = ApiRetrofit.getRetrofitClient().create(ApiInterface.class);
-
         Call<MoviesListedRes> call = apiService.getMoviesByQuery(API_KEY, searchText);
         call.enqueue(new Callback<MoviesListedRes>() {
             @Override

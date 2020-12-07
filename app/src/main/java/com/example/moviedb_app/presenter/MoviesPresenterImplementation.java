@@ -57,4 +57,9 @@ public class MoviesPresenterImplementation implements MoviesPresenterInterface {
     public void onErrorResponse(String message) {
         moviesViewInterface.showError(message);
     }
+
+    @Override
+    public void movieClicked(int position) {
+        moviesViewInterface.openMovieDetails(mMovies.get(position).getTitle(),mMovies.get(position).getDescription(),mMovies.get(position).getVote_average(), mMovies.get(position).getThumbnailPath());
+    }
 }

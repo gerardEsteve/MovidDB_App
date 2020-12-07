@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.moviedb_app.R;
-import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.presenter.MoviesPresenterImplementation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,12 +21,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MoviesViewInterface{
+
+    public static final String movieTitleKey ="MOVIE_TITLE";
+    public static final String movieRatingKey ="MOVIE_RATING";
+    public static final String movieDescKey ="MOVIE_DESC";
+    public static final String movieImgPathKey ="MOVIE_PATH";
+    public static final String ratingFormat = "Average rating: ";
 
 
     @BindView(R.id.recyclerView) RecyclerView moviesRecyclerView;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_details);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
@@ -49,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
 
         moviesListAdapter = new MoviesListAdapter(moviesPresenter,this);
         moviesRecyclerView.setAdapter(moviesListAdapter);
-        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //moviesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
         showEmptyScreen();
     }
@@ -117,4 +121,15 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
         empty.setVisibility(View.VISIBLE);
         Log.i("MainActivity",message);
     }
+
+    @Override
+    public void openMovieDetails(String title, String desc, Double rating, String path) {
+        Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
+        detailIntent.putExtra(movieDescKey,desc);
+        detailIntent.putExtra(movieRatingKey,rating);
+        detailIntent.putExtra(movieTitleKey,title);
+        detailIntent.putExtra(movieImgPathKey,path);
+        startActivity(detailIntent);
+    }
+
 }

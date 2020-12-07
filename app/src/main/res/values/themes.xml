@@ -22,4 +22,6 @@
     <style name="Theme.MovieDB_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MovieDB_App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>

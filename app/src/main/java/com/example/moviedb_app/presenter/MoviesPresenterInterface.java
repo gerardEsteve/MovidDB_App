@@ -18,4 +18,6 @@ public interface MoviesPresenterInterface {
     void onErrorApiCall(Throwable t);
 
     void onErrorResponse(String message);
+
+    void movieClicked(int position);
 }

@@ -2,6 +2,7 @@ package com.example.moviedb_app.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -36,7 +37,6 @@ import butterknife.ButterKnife;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
-
     private final MoviesPresenterImplementation presenter;
     private Activity mainActivity;
 
@@ -54,6 +54,13 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         presenter.onBindMovieRowViewAtPosition(position,holder);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.movieClicked(position);
+            }
+        });
     }
 
     @Override
@@ -70,7 +77,6 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-           // ButterKnife.bind(itemView);
             titleTextView = itemView.findViewById(R.id.movie_title);
             voteTextView = itemView.findViewById(R.id.vote_average);
             imageView = itemView.findViewById(R.id.thumbnail);
@@ -104,7 +110,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
         @Override
         public void setVote(Double vote) {
-            voteTextView.setText(vote.toString());
+            String ratingFormated = MainActivity.ratingFormat + vote.toString() + "/10";
+            voteTextView.setText(ratingFormated);
         }
     }
 
