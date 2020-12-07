@@ -9,6 +9,7 @@ import com.example.moviedb_app.R;
 import com.example.moviedb_app.presenter.MoviesPresenterImplementation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,9 +46,10 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar_details);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         moviesPresenter = new MoviesPresenterImplementation(this);
 
         moviesListAdapter = new MoviesListAdapter(moviesPresenter,this);
@@ -88,9 +90,7 @@ public class MainActivity extends AppCompatActivity implements MoviesViewInterfa
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
